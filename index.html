@@ -1,9 +1,11 @@
-/*remember, in bookmarkets, comments have to be like this. */
-/* single line comments end the input */
-
-/*ok, so you have to add d3 to the page, and wait til it's there to call its functions */
-
-(function(){
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<a href='javascript:(function(){
   if(document.location.href!="http://www.pro-football-reference.com/years/2012/fantasy.htm"){
     document.location.href="http://www.pro-football-reference.com/years/2012/fantasy.htm"; 
     return; 
@@ -40,7 +42,7 @@
      .style("fill","none").style("stroke","white").style("stroke-width",0.2);
     selection.exit().remove();
     selection.on("mouseover", function(d,i){
-
+      console.log(this);
       d3.selectAll("circle").style("stroke","white");
       d3.select(this).style("stroke","#089");
       $("#playerInfo").html("player info: "+d.name+" "
@@ -50,5 +52,7 @@
     
   };
   $.getScript("http://d3js.org/d3.v3.min.js",addGraph);  
-})();
-
+})();'>footballScatterPlot</a>
+<p>drag the above link to your bookmark bar. then click it. you should be redirected to a football stats site.  click the bookmark you made again, this should lead to a graph being displayed</p>
+</body>
+</html>
