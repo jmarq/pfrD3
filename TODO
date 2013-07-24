@@ -3,9 +3,15 @@
 //y axis: receiving yds; same type of ranges..
 //radius? tds? tds+1 (so 0's are visible?)
 
-svg size?
+svg size? ***see resizeD3.html, viewBox attribute for svg
 100%? I'd better practice with resizing D3 graphics.
 http://stackoverflow.com/questions/9400615/whats-the-best-way-to-make-a-d3-js-visualisation-layout-responsive
 
- 
+what about making the bookmarklet....
+  go to pfr.com
+  read the rows into the array.
+  toggle off the entire visual display
+  add a new svg element that is the size of the browser viewport
+  display the d3 chart in that svg, it should scale?
+  attach browser resize event, resize the svg accordingly.
 
