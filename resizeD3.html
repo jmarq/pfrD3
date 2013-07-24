@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>resizing d3 svgs</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<div id="d3"></div>
+<script>
+//the thing to notice here
+//is that the svg is 800X800
+//and the square drawn is 80X80.
+//thing is, the svg has a "viewbox" of 100X100, and that what is used when drawing
+//this way, the svg can be resized  
+	$(function(){
+	  d3.select("#d3").append("svg").attr("id","chart").attr("viewBox","0 0 100 100").attr("preserveAspectRatio","xMidYMid").attr("width",800).attr("height",800).style("border","2px solid black").style("background","red");
+	d3.select("svg").append("rect").attr("x",10).attr("y",10).attr("width",80).attr("height",80);	  
+
+	});
+</script>
+</body>
+</html>

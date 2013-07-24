@@ -1,0 +1,11 @@
+//goal: 2d scatter plot to start with, using row data from fantasy points table
+//x axis: rushing yds; range:0-maxVal? 0-historicRecord?
+//y axis: receiving yds; same type of ranges..
+//radius? tds? tds+1 (so 0's are visible?)
+
+svg size?
+100%? I'd better practice with resizing D3 graphics.
+http://stackoverflow.com/questions/9400615/whats-the-best-way-to-make-a-d3-js-visualisation-layout-responsive
+
+ 
+
