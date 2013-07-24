@@ -9,14 +9,71 @@
     return; 
   }
 
+  team_colors = {
+  ari: {primary: "B10339", secondary: "FFC40D", tertiary: "000000"},
+  atl: {primary: "000000", secondary: "231F20", tertiary: ""},
+  bal: {primary: "2B025B", secondary: "F5A329", tertiary: ""},
+  buf: {primary: "00133F", secondary: "EE2F2B", tertiary: ""},
+  car: {primary: "0097C6", secondary: "101B24", tertiary: "A2A7AB"},
+  chi: {primary: "00133F", secondary: "FF652B", tertiary: ""},
+  cin: {primary: "FF2700", secondary: "101B24", tertiary: ""},
+  cle: {primary: "4C230E", secondary: "FF652B", tertiary: ""},
+  dal: {primary: "002E4D", secondary: "FFFFFF", tertiary: ""},
+  den: {primary: "002E4D", secondary: "FF652B", tertiary: ""},
+  det: {primary: "006EA1", secondary: "F6F6F6", tertiary: "EFF4F8"},
+  gnb:  {primary: "294239", secondary: "FFBF00", tertiary: ""},
+  hou: {primary: "00133F", secondary: "D6303A", tertiary: ""},
+  ind: {primary: "00417E", secondary: "FFFFFF", tertiary: ""},
+  jax: {primary: "00839C", secondary: "101B24", tertiary: "FFFFFF"},
+  kan:  {primary: "C60024", secondary: "000000", tertiary: ""},
+  mia: {primary: "006B79", secondary: "FF642A", tertiary: ""},
+  min: {primary: "240A67", secondary: "FFAC2C", tertiary: ""},
+  nwe:  {primary: "00295B", secondary: "EE2F2B", tertiary: "C7CACC"},
+  nor:  {primary: "C6A876", secondary: "000B17", tertiary: ""},
+  nyg: {primary: "003155", secondary: "FFFFFF", tertiary: ""},
+  nyj: {primary: "174032", secondary: "FFFFFF", tertiary: ""},
+  oak: {primary: "000000", secondary: "B5BBBD", tertiary: "FFFFFF"},
+  phi: {primary: "002F30", secondary: "EFEFEF", tertiary: ""},
+  pit: {primary: "000000", secondary: "FFBF00", tertiary: ""},
+  sdg:  {primary: "05173C", secondary: "0F83B8", tertiary: "FFBF00"},
+  sfo:  {primary: "940029", secondary: "D99E77", tertiary: ""},
+  sea: {primary: "030F1F", secondary: "283E67", tertiary: ""},
+  stl: {primary: "00295B", secondary: "C1A05B", tertiary: ""},
+  tam:  {primary: "665C50", secondary: "D6303A", tertiary: ""},
+  ten: {primary: "002C4B", secondary: "EE2F2B", tertiary: "0080C0"},
+  was: {primary: "8C001A", secondary: "FFBF00", tertiary: ""}
+};
+
+teamColor=function(abv){
+    var abvl=abv.toLowerCase();
+    var color;
+  if(abvl in team_colors){
+    color="#"+team_colors[abvl].primary;
+  }
+  else{
+    color="#000";
+  }
+  
+  return(color);
+};
   
   var getData=function(){
     data=[];
     
     $("#fantasy").find("tbody").find("tr").each(function(){if(!$(this).attr("class")){data.push(this)}});
-    graphList=$.map(data,function(d){return(
+    graphList=$.map(data,function(d){
+      var teamABV="";
+      if(d.children[2].children[0]){
+        teamABV=d.children[2].children[0].innerHTML;
+      }
+      else{
+        teamABV=d.children[2].innerHTML;
+      }
+      return(
       {
        name: d.children[1].children[0].innerHTML,
+       team: teamABV,
+       color: teamColor(teamABV),
        rushingYards: parseInt(d.children[12].innerHTML),
        receivingYards: parseInt(d.children[16].innerHTML),
        tds: parseInt(d.children[14].innerHTML)+parseInt(d.children[18].innerHTML)
@@ -30,23 +87,23 @@
     $("body").append($("<div>").attr("id","playerInfo").html("player info: ").css({"font-size":"1.5em"}));
     bodyWidth=$("body").width();
     chartWidth=Math.floor(bodyWidth*0.7);
-    d3.select("body").append("svg").attr("id","chart").attr("viewBox","0 0 100 100").attr("preserveAspectRatio","xMidYMid").attr("width",chartWidth).attr("height",chartWidth).style("border","2px solid black").style("background","#222225");
+    d3.select("body").append("svg").attr("id","chart").attr("viewBox","0 0 100 100").attr("preserveAspectRatio","xMidYMid").attr("width",chartWidth).attr("height",chartWidth).style("border","2px solid black").style("background","white");
     selection=d3.select("svg").selectAll("rect").data(graphList);
     var scale=d3.scale.linear().domain([0,2500]).range([0,100]);
     selection.enter().append("circle")
      .attr("cx",function(d,i){return(scale(d.rushingYards))})
      .attr("cy",function(d,i){return(100-scale(d.receivingYards))})
      .attr("r",function(d,i){return((d.tds+1)/10)})
-     .style("fill","none").style("stroke","white").style("stroke-width",0.2);
+     .style("fill","none").style("stroke",function(d,i){return(d.color);}).style("stroke-width",0.2);
     selection.exit().remove();
     selection.on("mouseover", function(d,i){
-
-      d3.selectAll("circle").style("stroke","white");
       d3.select(this).style("stroke","#089");
       $("#playerInfo").html("player info: "+d.name+" "
        +d.rushingYards+" rushing, "+d.receivingYards+" receiving, "+d.tds+" touchdowns"
        ); 
-    });
+    })
+      .on("mouseout",function(d,i){d3.select(this).style("stroke",d.color);});
+    
     
   };
   $.getScript("http://d3js.org/d3.v3.min.js",addGraph);  
