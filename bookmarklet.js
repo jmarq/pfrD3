@@ -1,8 +1,3 @@
-/*remember, in bookmarkets, comments have to be like this. */
-/* single line comments end the input */
-
-/*ok, so you have to add d3 to the page, and wait til it's there to call its functions */
-
 (function(){
   if(document.location.href!="http://www.pro-football-reference.com/years/2012/fantasy.htm"){
     document.location.href="http://www.pro-football-reference.com/years/2012/fantasy.htm"; 
@@ -86,13 +81,23 @@ teamColor=function(abv){
     $("body").find("*").hide();
     $("body").append($("<div>").attr("id","playerInfo").html("player info: ").css({"font-size":"1.5em"}));
     bodyWidth=$("body").width();
-    chartWidth=Math.floor(bodyWidth*0.7);
+    chartWidth=600;
     d3.select("body").append("svg").attr("id","chart").attr("viewBox","0 0 100 100").attr("preserveAspectRatio","xMidYMid").attr("width",chartWidth).attr("height",chartWidth).style("border","2px solid black").style("background","white");
-    selection=d3.select("svg").selectAll("rect").data(graphList);
-    var scale=d3.scale.linear().domain([0,2500]).range([0,100]);
+    selection=d3.select("svg").selectAll("circle").data(graphList);
+    var scale=d3.scale.linear().domain([0,2500]).range([0,80]);
+    var yscale=d3.scale.linear().domain([0,2500]).range([80,0]);
+    var xaxis=d3.svg.axis().scale(scale).ticks(5).tickSize(1).orient("bottom");
+    var yaxis=d3.svg.axis().scale(yscale).ticks(5).tickSize(1).orient("left");
+
+    d3.select("svg").append("g").call(xaxis)
+      .attr("transform","translate(10,90)")
+      .attr("class","axis");
+    d3.select("svg").append("g").call(yaxis)
+      .attr("transform","translate(10,10)")
+      .attr("class", "axis")
     selection.enter().append("circle")
-     .attr("cx",function(d,i){return(scale(d.rushingYards))})
-     .attr("cy",function(d,i){return(100-scale(d.receivingYards))})
+     .attr("cx",function(d,i){return(scale(d.rushingYards)+10)})
+     .attr("cy",function(d,i){return(yscale(d.receivingYards)+10)})
      .attr("r",function(d,i){return((d.tds+1)/10)})
      .style("fill","none").style("stroke",function(d,i){return(d.color);}).style("stroke-width",0.2);
     selection.exit().remove();
@@ -103,9 +108,14 @@ teamColor=function(abv){
        ); 
     })
       .on("mouseout",function(d,i){d3.select(this).style("stroke",d.color);});
-    
-    
+    $(".axis").css({"stroke-width": "0.25px", "font-size": "1px","font-family":"helvetica,arial,sans-serif"});  
+    $(".domain").css({"stroke":"black","fill":"none", "stroke-width":"0.25px"});
+    $(".tick").css({"stroke-width":"0.25px", "stroke":"black", "font-size":"2px"});
+    $("text").css({"stroke-width":"0.1px"});
+
+    $("body").append($("<div>").attr("id","details").html("x axis: rushing yds <br>y axis: receiving yds<br>**note** negative values are marked as zero, I should fix that"));
   };
+
+
   $.getScript("http://d3js.org/d3.v3.min.js",addGraph);  
 })();
-
