@@ -104,7 +104,7 @@ teamColor=function(abv){
     selection.on("mouseover", function(d,i){
       d3.select(this).style("stroke","#089");
       $("#playerInfo").html("player info: "+d.name+" "
-       +d.rushingYards+" rushing, "+d.receivingYards+" receiving, "+d.tds+" touchdowns"
+        +d.rushingYards+" rushing, "+d.receivingYards+" receiving, "+d.tds+" touchdowns"
        ); 
     })
       .on("mouseout",function(d,i){d3.select(this).style("stroke",d.color);});
