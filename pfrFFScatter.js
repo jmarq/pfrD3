@@ -1,7 +1,9 @@
 (function(){
   if(!window.location.href.match(/http:\/\/www\.pro-football-reference\.com\/years\/20..\/fantasy\.htm/)){
-    document.location.href="http://www.pro-football-reference.com/years/2012/fantasy.htm"; 
-    return; 
+   var year=prompt("which year?\n(year of season kickoff,\naka '2012' for 2012-2013)");
+   
+   document.location.href="http://www.pro-football-reference.com/years/"+year+"/fantasy.htm"; 
+   return; 
   }
 
   team_colors = {
