@@ -1,5 +1,5 @@
 (function(){
-  if(document.location.href!="http://www.pro-football-reference.com/years/2012/fantasy.htm"){
+  if(!window.location.href.match(/http:\/\/www\.pro-football-reference\.com\/years\/20..\/fantasy\.htm/)){
     document.location.href="http://www.pro-football-reference.com/years/2012/fantasy.htm"; 
     return; 
   }
