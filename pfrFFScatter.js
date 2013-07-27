@@ -115,7 +115,7 @@ teamColor=function(abv){
     $(".tick").css({"stroke-width":"0.25px", "stroke":"black", "font-size":"2px"});
     $("text").css({"stroke-width":"0.1px"});
 
-    $("body").append($("<div>").attr("id","details").html("x axis: rushing yds <br>y axis: receiving yds<br>**note** negative values are marked as zero, I should fix that"));
+    $("body").append($("<div>").attr("id","details").html("x axis: rushing yds <br>y axis: receiving yds<br>radius: touchdowns<br>**note** negative values are marked as zero, I should fix that"));
   };
 
 
