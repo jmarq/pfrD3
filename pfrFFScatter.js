@@ -1,11 +1,11 @@
 (function(){
   if(!window.location.href.match(/http:\/\/www\.pro-football-reference\.com\/years\/20..\/fantasy\.htm/)){
    var year=prompt("which year?\n(year of season kickoff,\naka '2012' for 2012-2013)");
-   
+   alert("will this ever get shown?");
    document.location.href="http://www.pro-football-reference.com/years/"+year+"/fantasy.htm"; 
    return; 
   }
-
+  
   team_colors = {
   ari: {primary: "B10339", secondary: "FFC40D", tertiary: "000000"},
   atl: {primary: "000000", secondary: "231F20", tertiary: ""},
