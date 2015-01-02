@@ -1,5 +1,7 @@
 pfrD3
 =====
+hey this needs to be fixed, I think the table structure changed on the stats site, so the scraping is off.  
+
 check it out at 
 http://jmarq.github.io/pfrD3/
 
