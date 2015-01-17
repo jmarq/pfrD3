@@ -72,8 +72,8 @@ teamColor=function(abv){
        team: teamABV,
        color: teamColor(teamABV),
        rushingYards: parseInt(d.children[12].innerHTML),
-       receivingYards: parseInt(d.children[16].innerHTML),
-       tds: parseInt(d.children[14].innerHTML)+parseInt(d.children[18].innerHTML)
+       receivingYards: parseInt(d.children[17].innerHTML),
+       tds: parseInt(d.children[14].innerHTML)+parseInt(d.children[19].innerHTML)
       }
     )});
 
