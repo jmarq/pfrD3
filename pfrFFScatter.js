@@ -1,11 +1,13 @@
 (function(){
+  //go to pro football reference if we aren't there already, then this script will have to be run again
   if(!window.location.href.match(/http:\/\/www\.pro-football-reference\.com\/years\/20..\/fantasy\.htm/)){
    var year=prompt("which year?\n(year of season kickoff,\naka '2012' for 2012-2013)");
    
    document.location.href="http://www.pro-football-reference.com/years/"+year+"/fantasy.htm"; 
    return; 
   }
-
+  //we're already at pro football reference
+  //colors for use in the visualization
   team_colors = {
   ari: {primary: "B10339", secondary: "FFC40D", tertiary: "000000"},
   atl: {primary: "000000", secondary: "231F20", tertiary: ""},
@@ -41,6 +43,8 @@
   was: {primary: "8C001A", secondary: "FFBF00", tertiary: ""}
 };
 
+//some teams might not be listed in my colors list for various reasons (old team, multiple teams)
+// make unmatched teams black
 teamColor=function(abv){
     var abvl=abv.toLowerCase();
     var color;
@@ -55,11 +59,13 @@ teamColor=function(abv){
 };
   
   var getData=function(){
+    //scrape the page table, loading the data into a list of {} objects
     data=[];
     
     $("#fantasy").find("tbody").find("tr").each(function(){if(!$(this).attr("class")){data.push(this)}});
     graphList=$.map(data,function(d){
       var teamABV="";
+      //team name might be in a link, might not be
       if(d.children[2].children[0]){
         teamABV=d.children[2].children[0].innerHTML;
       }
@@ -78,6 +84,8 @@ teamColor=function(abv){
     )});
 
   };
+  
+  //d3 fun starts here
   var addGraph=function(){
     getData();
     $("body").find("*").hide();
